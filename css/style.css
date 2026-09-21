@@ -1095,21 +1095,9 @@ body[data-page="services"] .pricing-section {
   margin: 0 0 18px;
 }
 
-.dialog-bottom p {
-  max-width: 470px;
-  color: #c4c5bb;
-  font-size: 11px;
-}
-
 .dialog-bottom .text-link {
   border-color: #c4c5bb;
   white-space: nowrap;
-}
-
-.player-note {
-  color: #c4c5bb;
-  font-size: 10px;
-  margin-top: 15px;
 }
 
 .noscript-note {
