@@ -43,6 +43,17 @@
 ];
   // The URL and static document determine the language, never a stored preference.
   const language = document.documentElement.lang === 'fi' ? 'fi' : 'en';
+  // Clean URLs are served by the host. Direct file previews use actual HTML files.
+  if (location.protocol === 'file:') {
+    const script = document.querySelector('script[src$="js/main.js"]');
+    const root = new URL('../', script.src);
+    document.querySelectorAll('a[href^="/"]').forEach(anchor => {
+      const path = anchor.getAttribute('href');
+      if (!/^\/(?:fi\/)?(?:(?:work|services|about|contact)\/)?$/.test(path)) return;
+      const file = `${path}index.html`;
+      anchor.href = new URL(file.slice(1), root).href;
+    });
+  }
   let slideIndex = 0;
   let previousFocus = null;
   // Preserve links shared before the separate Finnish pages were introduced.
@@ -60,6 +71,18 @@
     }
     try { history.replaceState(null, '', destination.href); }
     catch { /* Some file:// browsers restrict history changes. Content still works. */ }
+  }
+  // GitHub Pages cannot configure server redirects for legacy .html addresses.
+  // Real directory pages support direct visits; old URLs redirect here and carry
+  // the same canonical tag as their destination even when JavaScript is disabled.
+  if (location.protocol !== 'file:' && /\.html$/.test(location.pathname)) {
+    const destination = new URL(document.querySelector('link[rel="canonical"]').href);
+    destination.protocol = location.protocol;
+    destination.host = location.host;
+    destination.search = location.search;
+    destination.hash = location.hash;
+    location.replace(destination.href);
+    return;
   }
   const choose = (en, fi) => language === 'fi' ? fi : en;
   const $ = (selector) => document.querySelector(selector);

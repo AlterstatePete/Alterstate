@@ -23,9 +23,9 @@ For an optional HTTP preview, run `python -m http.server 8000 --bind 127.0.0.1` 
 
 ## Edit content
 
-Each page is complete HTML. Root pages are English; `fi/` pages are Finnish. Both work directly from disk without a build step. To maintain translations together, edit the root pages' `data-en` / `data-fi` attributes and default English text, then optionally run `python scripts/sync_languages.py`. This refreshes the committed, static Finnish pages and metadata. You can also edit the HTML directly; subsequent synchronization overwrites the Finnish copies. Headings preserve intentional line breaks.
+Each page is complete HTML. Root pages are English; `fi/` pages are Finnish. Both work directly from disk without a build step. To maintain translations together, edit the root pages' `data-en` / `data-fi` attributes and default English text, then optionally run `python scripts/sync_languages.py`. This refreshes the committed Finnish pages, all directory-based route pages, and metadata. Run it after editing source pages so the public routes receive the same changes. You can also edit the HTML directly; subsequent synchronization overwrites Finnish copies and directory index files. Headings preserve intentional line breaks.
 
-EN/FI are real links to the matching language version of the current page. Language comes from the document URL, with no cookie, browser-language or localStorage redirection. Content and language links work without JavaScript. Previously shared `?lang=fi` links redirect in JavaScript to the corresponding Finnish document; `?lang=en` is removed. On the production host, permanent redirects for these legacy URLs can replace this compatibility fallback.
+EN/FI are real links to the matching language version of the current page. Language comes from the document URL, with no cookie, browser-language or localStorage redirection. On HTTP(S), content and language links work without JavaScript. When opening files directly, JavaScript converts navigation links to local index files. Previously shared `?lang=fi` links redirect in JavaScript to the corresponding Finnish document; `?lang=en` is removed. GitHub Pages has no custom server redirect rules: old `.html` URLs remain readable and use JavaScript to reach the clean URL. Without JavaScript, their canonical tags point to the clean version. Queries and fragments survive the redirect; recognized `lang` parameters are removed after choosing the language.
 
 ## Videos
 
@@ -72,14 +72,14 @@ The fixed header starts with a masthead at the footer wordmark's font size and c
 
 ## SEO and launch
 
-Production domain: `https://alterstate.studio` (confirmed). English home canonical: `/`; Finnish home canonical: `/fi/`. Other pages retain their `.html` filenames. Each page includes its own canonical, reciprocal `en` / `fi` / `x-default` hreflang links, a unique localized title and description, and matching Open Graph metadata. English is the fallback language. Organization JSON-LD contains only the real studio name, website and contact details. Placeholder videos intentionally have no VideoObject markup or fabricated portfolio claims.
+Production domain: `https://alterstate.studio` (confirmed). English home canonical: `/`; Finnish home canonical: `/fi/`. Other public URLs use directories: `/services/`, `/work/`, `/about/`, `/contact/`, and the matching `/fi/` routes. GitHub Pages serves an `index.html` inside each directory. Each page includes its own canonical, reciprocal `en` / `fi` / `x-default` hreflang links, a unique localized title and description, and matching Open Graph metadata. English is the fallback language. Organization JSON-LD contains only the real studio name, website and contact details. Placeholder videos intentionally have no VideoObject markup or fabricated portfolio claims.
 
 All ten URLs are listed in `sitemap.xml`; `robots.txt` allows crawling and links to the sitemap. Metadata and the domain are maintained in `scripts/sync_languages.py`. No automated build, dependency installation or backend is required to serve the resulting files.
 
 At launch:
 
-- Deploy all HTML, `fi/`, CSS, JavaScript, `robots.txt` and `sitemap.xml` to the domain root. Ensure `/` and `/fi/` serve their respective index documents.
-- Configure HTTPS and permanent redirects from HTTP and any www alias to the preferred domain. Redirect `/index.html` to `/` and `/fi/index.html` to `/fi/` if the host supports it; canonical tags already identify the preferred URLs.
+- Publish the whole site directory structure to GitHub Pages, including `work/`, `services/`, `about/`, `contact/`, all `fi/` subdirectories, and `.nojekyll`. These committed files need no build command. Keep the existing GitHub Pages custom-domain setting for `alterstate.studio` (and its CNAME file if present in your repository). The root-relative links target that domain root, not a github.io repository subpath.
+- Enable HTTPS in GitHub Pages. GitHub Pages uses trailing slashes for directory URLs, so `/services` resolves to `/services/`. Direct visits and refreshes work because each route is a real directory page. No DNS change at Porkbun is needed for clean paths. The separate `alterstate.fi` domain forward should still target `https://alterstate.studio/fi/`.
 - Replace the nature placeholders with studio work before promoting the portfolio. Update work-page metadata to describe actual projects then. Add an owned social-sharing image when available; no borrowed video thumbnail is used as the studio's social image.
 - Verify the domain in Google Search Console, submit `/sitemap.xml`, and inspect both language versions after publishing. Check live performance/Core Web Vitals on the actual host; local checks cannot establish field performance or indexing.
 - Keep private staging deployments access-controlled or marked noindex through hosting settings. The included robots file is for the public production site.

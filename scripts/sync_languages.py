@@ -47,7 +47,24 @@ PLACES = dict(zip(
 
 def page_url(page, language):
     directory = '/fi/' if language == 'fi' else '/'
-    return SITE_URL + directory + ('' if page == 'index' else page + '.html')
+    return SITE_URL + directory + ('' if page == 'index' else page + '/')
+
+
+def navigation(source, language):
+    """Normalize internal page links; keep assets, fragments and external links intact."""
+    def anchor(match):
+        tag = match[0]
+        href = re.search(r'href="([^"]+)"', tag)
+        if not href:
+            return tag
+        route = re.fullmatch(r'(?:\.\./|/)?(?:fi/)?(index|work|services|about|contact)?(?:\.html)?/?', href[1])
+        if not route:
+            return tag
+        choice = re.search(r'data-lang-choice="(en|fi)"', tag)
+        lang = choice[1] if choice else language
+        target = page_url(route[1] or 'index', lang).removeprefix(SITE_URL)
+        return tag.replace(href[0], f'href="{target}"')
+    return re.sub(r'<a\b[^>]*>', anchor, source)
 
 
 def metadata(source, page, language):
@@ -100,7 +117,7 @@ def finnish_page(source, page):
     source = source.replace('aria-roledescription="carousel"', 'aria-roledescription="karuselli"')
     source = source.replace('<h2 id="film-title">Film</h2>', '<h2 id="film-title">Video</h2>')
     source = source.replace('Enable JavaScript to use the video player. Language links and page content work without it.', 'Ota JavaScript käyttöön videotoistoa varten. Kielivalinta ja sivujen sisältö toimivat myös ilman JavaScriptiä.')
-    return metadata(source, page, 'fi')
+    return metadata(navigation(source, 'fi'), page, 'fi')
 
 
 def main():
@@ -108,14 +125,25 @@ def main():
     urls = []
     for page in METADATA:
         path = ROOT / (page + '.html')
-        source = metadata(path.read_text(encoding='utf-8'), page, 'en')
+        source = metadata(navigation(path.read_text(encoding='utf-8'), 'en'), page, 'en')
         path.write_text(source, encoding='utf-8')
-        (ROOT / 'fi' / path.name).write_text(finnish_page(source, page), encoding='utf-8')
+        finnish = finnish_page(source, page)
+        (ROOT / 'fi' / path.name).write_text(finnish, encoding='utf-8')
+        if page != 'index':
+            # GitHub Pages serves directory/index.html at /directory/ natively.
+            # Keep the original files for editing, file previews and old links.
+            for language, html in [('en', source), ('fi', finnish)]:
+                directory = ROOT / page if language == 'en' else ROOT / 'fi' / page
+                directory.mkdir(parents=True, exist_ok=True)
+                prefix = '../' if language == 'en' else '../../'
+                html = re.sub(r'href="(?:\.\./)?css/', 'href="' + prefix + 'css/', html)
+                html = re.sub(r'src="(?:\.\./)?js/', 'src="' + prefix + 'js/', html)
+                (directory / 'index.html').write_text(html, encoding='utf-8')
         urls.extend(page_url(page, language) for language in ('en', 'fi'))
     entries = '\n'.join(f'  <url><loc>{url}</loc></url>' for url in urls)
     (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + entries + '\n</urlset>\n', encoding='utf-8')
     (ROOT / 'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n', encoding='utf-8')
-    print('Updated 10 static pages, sitemap.xml and robots.txt.')
+    print('Updated source pages, GitHub Pages routes, sitemap.xml and robots.txt.')
 
 
 if __name__ == '__main__':
