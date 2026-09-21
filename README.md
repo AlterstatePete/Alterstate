@@ -4,7 +4,7 @@ A responsive English/Finnish video production website built with HTML5, CSS3 and
 
 ## Open
 
-Open `index.html` directly. Page content, language switching and gallery controls work locally. YouTube thumbnails and video playback require an internet connection. There are no local image files.
+Open `index.html` directly. Page content, language switching and gallery controls work locally. YouTube thumbnails and video playback require an internet connection. Video images load from YouTube. The local `favicon.svg` and `favicon.ico` provide the browser tab icon; upload both at the domain root.
 
 For an optional HTTP preview, run `python -m http.server 8000 --bind 127.0.0.1` and open `http://127.0.0.1:8000`. YouTube can restrict embeds on `file://`; every video dialog also has a direct YouTube link.
 

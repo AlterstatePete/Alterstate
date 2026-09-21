@@ -12,8 +12,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE_URL = 'https://alterstate.studio'
 METADATA = {
     'index': {
-        'en': ('Video production for brands | ALTERSTATE Studio', 'Advertising films, brand videos and social content. ALTERSTATE Studio combines creative direction with AI-assisted production, from first idea to final edit.'),
-        'fi': ('Videotuotanto yrityksille ja brändeille | ALTERSTATE Studio', 'Mainosfilmit, brändivideot ja somevideot yrityksille. ALTERSTATE Studio yhdistää luovan suunnittelun ja tekoälyavusteisen tuotannon ideasta valmiiksi videoksi.'),
+        'en': ('ALTERSTATE Studio', 'Advertising films, brand videos and social content. ALTERSTATE Studio combines creative direction with AI-assisted production, from first idea to final edit.'),
+        'fi': ('ALTERSTATE Studio', 'Mainosfilmit, brändivideot ja somevideot yrityksille. ALTERSTATE Studio yhdistää luovan suunnittelun ja tekoälyavusteisen tuotannon ideasta valmiiksi videoksi.'),
     },
     'work': {
         'en': ('Films & videos | ALTERSTATE Studio', 'Explore a selection of films and visual stories. Contact ALTERSTATE Studio to discuss your next video, from the first idea to the final edit.'),
@@ -72,6 +72,11 @@ def metadata(source, page, language):
     source = re.sub(r'    <!-- SEO START -->.*?    <!-- SEO END -->\n', '', source, flags=re.S)
     source = re.sub(r'    <meta (?:name="description"|property="og:[^"]+")[^>]*>\n', '', source)
     source = re.sub(r'    <title>.*?</title>\n', '', source)
+    source = re.sub(r'    <link rel="icon"[^>]*>\n', '', source)
+    icon_prefix = '../' if language == 'fi' else ''
+    source = source.replace('  </head>',
+                            f'    <link rel="icon" href="{icon_prefix}favicon.ico?v=1" sizes="32x32">\n'
+                            f'    <link rel="icon" type="image/svg+xml" href="{icon_prefix}favicon.svg?v=1">\n  </head>')
     locale = 'fi_FI' if language == 'fi' else 'en_GB'
     other_locale = 'en_GB' if language == 'fi' else 'fi_FI'
     url = page_url(page, language)
@@ -138,6 +143,7 @@ def main():
                 prefix = '../' if language == 'en' else '../../'
                 html = re.sub(r'href="(?:\.\./)?css/', 'href="' + prefix + 'css/', html)
                 html = re.sub(r'src="(?:\.\./)?js/', 'src="' + prefix + 'js/', html)
+                html = re.sub(r'href="(?:\.\./)?favicon\.', 'href="' + prefix + 'favicon.', html)
                 (directory / 'index.html').write_text(html, encoding='utf-8')
         urls.extend(page_url(page, language) for language in ('en', 'fi'))
     entries = '\n'.join(f'  <url><loc>{url}</loc></url>' for url in urls)
