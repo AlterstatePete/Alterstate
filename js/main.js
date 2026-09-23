@@ -2,19 +2,19 @@
 (() => {
   'use strict';
 
-  // Replace these placeholder nature films and their YouTube thumbnails with studio work.
+  // Studio work first; replace the remaining nature films as more work is added.
   const films = [
     {
-        "id": "CxwJrzEdw1U",
-        "name": "Norway",
-        "nameFi": "Norja",
-        "title": "Norway — Scenic Relaxation"
+        "id": "J4KnBqXfA1A",
+        "name": "Premium Perfume Commercial",
+        "nameFi": "Premium Perfume Commercial",
+        "title": "Premium Perfume Commercial"
     },
     {
-        "id": "g1QR0RO1pbw",
-        "name": "Faroe Islands",
-        "nameFi": "Färsaaret",
-        "title": "Faroe Islands — Scenic Relaxation"
+        "id": "7r_paDzJU4o",
+        "name": "Beverage Commercial",
+        "nameFi": "Beverage Commercial",
+        "title": "Beverage Commercial"
     },
     {
         "id": "fyOVKyaKJq4",
@@ -237,8 +237,8 @@
     if (!carousel) return;
     const film = films[slideIndex];
     const img = $('.hero-image');
-    img.src = `https://i.ytimg.com/vi/${film.id}/hqdefault.jpg`;
-    img.alt = `${choose(film.name, film.nameFi)} — ${choose('nature video preview', 'luontovideon esikatselukuva')}`;
+    img.src = `https://i.ytimg.com/vi/${film.id}/maxresdefault.jpg`;
+    img.alt = `${choose(film.name, film.nameFi)} — ${choose('video preview', 'videon esikatselukuva')}`;
     img.draggable = false;
     $('.hero-index').textContent = `${String(slideIndex + 1).padStart(2, '0')} / ${String(films.length).padStart(2, '0')}`;
     $('.hero-project-title').textContent = choose(film.name, film.nameFi);

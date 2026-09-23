@@ -41,8 +41,8 @@ LABELS = {
     'Close video': 'Sulje video',
 }
 PLACES = dict(zip(
-    ['Norway', 'Faroe Islands', 'Switzerland', 'Iceland', 'The Ocean', 'New Zealand'],
-    ['Norja', 'Färsaaret', 'Sveitsi', 'Islanti', 'Valtameri', 'Uusi-Seelanti']))
+    ['Premium Perfume Commercial', 'Beverage Commercial', 'Switzerland', 'Iceland', 'The Ocean', 'New Zealand'],
+    ['Premium Perfume Commercial', 'Beverage Commercial', 'Sveitsi', 'Islanti', 'Valtameri', 'Uusi-Seelanti']))
 
 
 def page_url(page, language):
@@ -116,7 +116,7 @@ def finnish_page(source, page):
     for english, finnish in LABELS.items():
         source = source.replace(f'aria-label="{english}"', f'aria-label="{finnish}"')
     for english, finnish in PLACES.items():
-        source = source.replace(f'alt="{english} nature video preview"', f'alt="{finnish} – luontovideon esikatselukuva"')
+        source = source.replace(f'alt="{english} video preview"', f'alt="{finnish} – videon esikatselukuva"')
         for en_action, fi_action in [('Select video', 'Valitse video'), ('Play video', 'Toista video')]:
             source = source.replace(f'aria-label="{en_action}: {english}"', f'aria-label="{fi_action}: {finnish}"')
     source = source.replace('aria-roledescription="carousel"', 'aria-roledescription="karuselli"')
