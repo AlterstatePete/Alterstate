@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  // Studio work first; replace the remaining nature films as more work is added.
+  // Portfolio videos, in carousel and gallery order.
   const films = [
     {
         "id": "J4KnBqXfA1A",
@@ -17,28 +17,10 @@
         "title": "Beverage Commercial"
     },
     {
-        "id": "fyOVKyaKJq4",
-        "name": "Switzerland",
-        "nameFi": "Sveitsi",
-        "title": "Switzerland — Scenic Relaxation"
-    },
-    {
-        "id": "Pbzn79TSRO0",
-        "name": "Iceland",
-        "nameFi": "Islanti",
-        "title": "Iceland — Scenic Relaxation"
-    },
-    {
-        "id": "eoTpdTU8nTA",
-        "name": "The Ocean",
-        "nameFi": "Valtameri",
-        "title": "The Ocean — Scenic Relaxation"
-    },
-    {
-        "id": "vtxVK3sbZ0o",
-        "name": "New Zealand",
-        "nameFi": "Uusi-Seelanti",
-        "title": "New Zealand — Scenic Relaxation"
+        "id": "3jJ4FZYUut8",
+        "name": "Cinematic Audiobook Service Commercial",
+        "nameFi": "Cinematic Audiobook Service Commercial",
+        "title": "Cinematic Audiobook Service Commercial"
     }
 ];
   // The URL and static document determine the language, never a stored preference.

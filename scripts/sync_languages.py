@@ -40,9 +40,7 @@ LABELS = {
     'Previous video': 'Edellinen video', 'Next video': 'Seuraava video',
     'Close video': 'Sulje video',
 }
-PLACES = dict(zip(
-    ['Premium Perfume Commercial', 'Beverage Commercial', 'Switzerland', 'Iceland', 'The Ocean', 'New Zealand'],
-    ['Premium Perfume Commercial', 'Beverage Commercial', 'Sveitsi', 'Islanti', 'Valtameri', 'Uusi-Seelanti']))
+VIDEO_TITLES = {'Premium Perfume Commercial': 'Premium Perfume Commercial', 'Beverage Commercial': 'Beverage Commercial', 'Cinematic Audiobook Service Commercial': 'Cinematic Audiobook Service Commercial'}
 
 
 def page_url(page, language):
@@ -115,7 +113,7 @@ def finnish_page(source, page):
                     f'<nav class="language-switch" aria-label="Kieli"><a href="../{page}.html" lang="en" hreflang="en" data-lang-choice="en">EN</a><span class="language-divider" aria-hidden="true">/</span><a href="{page}.html" lang="fi" hreflang="fi" data-lang-choice="fi" class="active" aria-current="true">FI</a></nav>', source)
     for english, finnish in LABELS.items():
         source = source.replace(f'aria-label="{english}"', f'aria-label="{finnish}"')
-    for english, finnish in PLACES.items():
+    for english, finnish in VIDEO_TITLES.items():
         source = source.replace(f'alt="{english} video preview"', f'alt="{finnish} – videon esikatselukuva"')
         for en_action, fi_action in [('Select video', 'Valitse video'), ('Play video', 'Toista video')]:
             source = source.replace(f'aria-label="{en_action}: {english}"', f'aria-label="{fi_action}: {finnish}"')
