@@ -7,20 +7,32 @@
     {
         "id": "J4KnBqXfA1A",
         "name": "Premium Perfume Commercial",
-        "nameFi": "Premium Perfume Commercial",
+        "nameFi": "Luksushajuveden mainos",
         "title": "Premium Perfume Commercial"
     },
     {
         "id": "7r_paDzJU4o",
         "name": "Beverage Commercial",
-        "nameFi": "Beverage Commercial",
+        "nameFi": "Juomamainos",
         "title": "Beverage Commercial"
     },
     {
         "id": "3jJ4FZYUut8",
         "name": "Cinematic Audiobook Service Commercial",
-        "nameFi": "Cinematic Audiobook Service Commercial",
+        "nameFi": "Äänikirjapalvelun elokuvallinen mainos",
         "title": "Cinematic Audiobook Service Commercial"
+    },
+    {
+        "id": "pDFKDE-n9qA",
+        "name": "Online Sports Retailer Commercial",
+        "nameFi": "Urheiluvälineiden verkkokaupan mainos",
+        "title": "Online Sports Retailer Commercial"
+    },
+    {
+        "id": "80PdIgYb5Co",
+        "name": "Industrial Product Showcase",
+        "nameFi": "Teollisuustuotteen esittely",
+        "title": "Industrial Product Showcase"
     }
 ];
   // The URL and static document determine the language, never a stored preference.
@@ -334,7 +346,7 @@
     const film = films.find(item => item.id === id);
     if (!film) return;
     previousFocus = document.activeElement;
-    $('#film-title').textContent = film.title;
+    $('#film-title').textContent = choose(film.title, film.nameFi);
     $('.youtube-fallback').href = `https://www.youtube.com/watch?v=${film.id}`;
     if (location.protocol === 'file:') {
       const note = document.createElement('p');
@@ -350,7 +362,7 @@
       return;
     }
     const iframe = document.createElement('iframe');
-    iframe.title = film.title;
+    iframe.title = choose(film.title, film.nameFi);
     const playerUrl = new URL(`https://www.youtube-nocookie.com/embed/${film.id}`);
     playerUrl.search = new URLSearchParams({ autoplay: '1', rel: '0', playsinline: '1', origin: location.origin }).toString();
     iframe.src = playerUrl.href;

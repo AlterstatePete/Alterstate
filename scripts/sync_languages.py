@@ -40,7 +40,7 @@ LABELS = {
     'Previous video': 'Edellinen video', 'Next video': 'Seuraava video',
     'Close video': 'Sulje video',
 }
-VIDEO_TITLES = {'Premium Perfume Commercial': 'Premium Perfume Commercial', 'Beverage Commercial': 'Beverage Commercial', 'Cinematic Audiobook Service Commercial': 'Cinematic Audiobook Service Commercial'}
+VIDEO_TITLES = {'Premium Perfume Commercial': 'Luksushajuveden mainos', 'Beverage Commercial': 'Juomamainos', 'Cinematic Audiobook Service Commercial': 'Äänikirjapalvelun elokuvallinen mainos', 'Online Sports Retailer Commercial': 'Urheiluvälineiden verkkokaupan mainos', 'Industrial Product Showcase': 'Teollisuustuotteen esittely'}
 
 
 def page_url(page, language):
