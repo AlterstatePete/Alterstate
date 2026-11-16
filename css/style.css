@@ -782,7 +782,6 @@ main {
 .services-flexible h2 { font-size: clamp(30px,3vw,45px); line-height: 1.12; }
 .services-story p { color: var(--muted); font-size: 15px; margin-bottom: 22px; }
 .services-story .text-link { margin-top: 5px; }
-.contact-prompt p { max-width: 520px; }
 @media (max-width: 760px) {
   .services-flexible { grid-template-columns: 1fr; gap: 25px; padding-bottom: 50px; }
   .services-story p { font-size: 14px; }
@@ -793,7 +792,6 @@ main {
   .production-explainer { padding-top: 0; }
   .production-value h2 { font-size: 36px; }
   .production-explainer p { font-size: 14px; }
-  body[data-page="contact"] .direct-contact { grid-template-columns: 1fr; }
 }
 @media (max-width: 540px) {
   .understated-pricing .pricing-grid { gap: 0; }
@@ -956,33 +954,141 @@ body[data-page="services"] .pricing-section {
   margin: 25px 0;
 }
 
-.direct-contact {
+.contact-layout {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 75px;
-  padding: 38px 0 85px;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(40px,8vw,128px);
+  padding: 36px 0 clamp(55px,7vw,105px);
   border-top: 1px solid var(--line);
 }
 
-.direct-contact h2 {
-  font-size: 31px;
-  margin-bottom: 30px;
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 30px clamp(20px,3vw,40px);
+  max-width: 660px;
 }
 
-.contact-prompt h3 {
-  font-size: 21px;
-  font-weight: 500;
-  letter-spacing: -.03em;
+.contact-field {
+  display: grid;
+  gap: 4px;
 }
 
-.contact-prompt p {
-  font-size: 15px;
-  color: var(--muted);
-  max-width: 380px;
-  margin: 15px 0 25px;
+.contact-field label {
+  font-size: 14px;
 }
 
-/* Contact details on every page, with real mail and telephone links. */
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #85867b;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  padding: 8px 0;
+}
+
+.contact-field input {
+  min-height: 44px;
+}
+
+.contact-field textarea {
+  min-height: 112px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+  box-shadow: inset 0 -1px var(--ink);
+}
+
+.contact-message,
+.contact-form-actions {
+  grid-column: 1 / -1;
+}
+
+.contact-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+}
+
+.contact-form .text-link {
+  min-height: 44px;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.contact-form .text-link:disabled {
+  opacity: .65;
+}
+
+.contact-form-status {
+  flex: 1 1 180px;
+  font-size: 14px;
+}
+
+.contact-form-status:empty {
+  position: absolute;
+}
+
+.contact-details {
+  display: grid;
+  gap: 24px;
+  justify-items: start;
+}
+
+.contact-details a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(17px,1.65vw,23px);
+  letter-spacing: -.025em;
+  overflow-wrap: anywhere;
+}
+
+.contact-details .icon {
+  color: #ad3c21;
+}
+
+.contact-details a:hover {
+  color: #ad3c21;
+}
+
+.contact-method {
+  display: block;
+  margin-bottom: 5px;
+  color: #62655b;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+@media (max-width: 800px) {
+  .contact-layout {
+    grid-template-columns: minmax(0,1fr);
+    gap: 42px;
+  }
+
+  .contact-details {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    grid-template-columns: minmax(0,1fr);
+    gap: 20px;
+  }
+}
+
+/* Contact call to action above the footer. */
 .closing {
   margin: 0 var(--gutter);
   padding: 48px 0;
@@ -1004,34 +1110,13 @@ body[data-page="services"] .pricing-section {
   margin-top: 12px;
 }
 
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  align-items: flex-start;
+.closing .text-link {
+  font-size: clamp(17px,1.5vw,21px);
 }
 
-.contact-links a {
-  font-size: clamp(18px,2vw,28px);
-  letter-spacing: -.025em;
-  padding-bottom: 4px;
-  border-bottom: 1px solid transparent;
-  overflow-wrap: anywhere;
-}
-
-.contact-links a:hover {
-  border-bottom-color: var(--ink);
-}
-
-.contact-links a > span {
-  color: #b34c31;
-  margin-left: 10px;
-}
-
-.contact-links a[href^="tel"] {
-  font-size: 18px;
-  color: #62655b;
-  letter-spacing: 0;
+.closing:hover .text-link,
+.closing:focus-visible .text-link {
+  color: #ad3c21;
 }
 
 .site-footer {
@@ -1168,7 +1253,7 @@ body[data-page="services"] .pricing-section {
   .thumb-number {
     display: none;
   }
-  .about-simple,.direct-contact {
+  .about-simple {
     gap: 35px;
   }
   .hero-carousel {
@@ -1413,17 +1498,6 @@ body[data-page="services"] .pricing-section {
   .about-simple h2 {
     font-size: 34px;
   }
-  .direct-contact {
-    grid-template-columns: 1fr;
-    gap: 45px;
-    padding: 28px 0 55px;
-  }
-  .direct-contact h2 {
-    margin-bottom: 20px;
-  }
-  .contact-links a {
-    font-size: 23px;
-  }
   .closing {
     flex-direction: column;
     align-items: flex-start;
@@ -1493,9 +1567,6 @@ body[data-page="services"] .pricing-section {
   }
   .hero-index {
     margin-left: 5px;
-  }
-  .contact-links a {
-    font-size: clamp(19px,5.8vw,26px);
   }
   .process-grid {
     gap: 25px;

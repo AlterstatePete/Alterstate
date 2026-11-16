@@ -79,26 +79,44 @@
     </header>
     </div>
     <main id="main">
-      <section class="page-intro compact-intro">
-        <div class="eyebrow"><span data-en="CONTACT" data-fi="YHTEYSTIEDOT">YHTEYSTIEDOT</span></div>
-        <h1 data-en="Contact us." data-fi="Ota yhteyttä.">Ota yhteyttä.</h1>
-        <p class="page-lead" data-en="An idea, a finished brief or simply a conversation. You can start here." data-fi="Alustava idea, valmis suunnitelma tai halu pohtia vaihtoehtoja yhdessä. Ota yhteyttä missä vaiheessa tahansa.">Alustava idea, valmis suunnitelma tai halu pohtia vaihtoehtoja yhdessä. Ota yhteyttä missä vaiheessa tahansa.</p>
-      </section>
-      <section class="direct-contact">
-        <div>
-          <h2 data-en="Let’s talk." data-fi="Jutellaan.">Jutellaan.</h2>
-          <div class="contact-links">
-            <a href="mailto:pete@alterstate.studio">pete@alterstate.studio <span aria-hidden="true"><svg class="icon icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"></path></svg></span></a>
-            <a href="tel:+358408598077">+358 40 859 8077</a>
+      <header class="page-intro">
+        <h1 id="contact-title" data-en="Let’s talk." data-fi="Ota yhteyttä">Ota yhteyttä</h1>
+        <p class="page-lead" data-en="An early idea, a finished brief or a video that needs work. Tell us where you are and we’ll take it from there." data-fi="Alustava idea, valmis suunnitelma tai video, joka kaipaa viimeistelyä. Kerro, missä vaiheessa olet, niin mietitään seuraava askel yhdessä.">Alustava idea, valmis suunnitelma tai video, joka kaipaa viimeistelyä. Kerro, missä vaiheessa olet, niin mietitään seuraava askel yhdessä.</p>
+      </header>
+      <div class="contact-layout">
+        <form class="contact-form" aria-labelledby="contact-title" action="https://formspree.io/f/mppdpkra" method="post">
+          <input type="hidden" name="subject" value="New ALTERSTATE inquiry from {{ name }}">
+          <div class="contact-field">
+            <label for="contact-name" data-en="Name" data-fi="Nimi">Nimi</label>
+            <input id="contact-name" name="name" autocomplete="name" required>
           </div>
+          <div class="contact-field">
+            <label for="contact-email" data-en="Email" data-fi="Sähköposti">Sähköposti</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="contact-field contact-message">
+            <label for="contact-message" data-en="Tell us about your project" data-fi="Kerro projektistasi">Kerro projektistasi</label>
+            <textarea id="contact-message" name="message" rows="4" required></textarea>
+          </div>
+          <div class="contact-form-actions">
+            <button class="text-link" type="submit">
+              <span data-en="Send inquiry" data-fi="Lähetä viesti">Lähetä viesti</span>
+              <svg class="icon icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"></path></svg>
+            </button>
+            <p class="contact-form-status" role="status"></p>
+          </div>
+        </form>
+        <div class="contact-details">
+          <a href="mailto:pete@alterstate.studio">
+            <span><span class="contact-method" data-en="Email" data-fi="Sähköposti">Sähköposti</span>pete@alterstate.studio</span>
+            <svg class="icon icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"></path></svg>
+          </a>
+          <a href="tel:+358408598077">
+            <span><span class="contact-method" data-en="Phone" data-fi="Puhelin">Puhelin</span>+358 40 859 8077</span>
+            <svg class="icon icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"></path></svg>
+          </a>
         </div>
-        <div class="contact-prompt">
-          <h2 data-en="Wherever you are with it." data-fi="Mukaan missä vaiheessa tahansa.">Mukaan missä vaiheessa tahansa.</h2>
-          <p data-en="Bring us the first spark of an idea, or let’s find one together. If your concept is already ready to produce, we can take it from there." data-fi="Voit tulla meille alustavan idean kanssa tai lähteä kehittämään sitä yhdessä. Jos suunnitelmasi on jo valmis, voimme aloittaa toteutuksesta.">Voit tulla meille alustavan idean kanssa tai lähteä kehittämään sitä yhdessä. Jos suunnitelmasi on jo valmis, voimme aloittaa toteutuksesta.</p>
-          <p data-en="Already have a video? We can also help with a specific part: an edit, new visuals, sound or versions for another channel. You don’t need a whole production to get in touch." data-fi="Onko sinulla jo video? Autamme myös yksittäisissä työvaiheissa, kuten leikkauksessa, uuden kuvamateriaalin tekemisessä, äänen viimeistelyssä tai eri kanaviin sopivien versioiden toteutuksessa. Meiltä voi tilata myös osan tuotannosta.">Onko sinulla jo video? Autamme myös yksittäisissä työvaiheissa, kuten leikkauksessa, uuden kuvamateriaalin tekemisessä, äänen viimeistelyssä tai eri kanaviin sopivien versioiden toteutuksessa. Meiltä voi tilata myös osan tuotannosta.</p>
-          <p data-en="Tell us what you have and what you’d like to do. We’ll work out the next step together." data-fi="Kerro, missä vaiheessa olet ja mihin kaipaat apua. Suunnitellaan seuraava askel yhdessä.">Kerro, missä vaiheessa olet ja mihin kaipaat apua. Suunnitellaan seuraava askel yhdessä.</p>
-        </div>
-      </section>
+      </div>
     </main>
     <footer class="site-footer">
       <a class="footer-wordmark" href="/fi/">ALTERSTATE</a>

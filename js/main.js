@@ -82,6 +82,39 @@
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => [...document.querySelectorAll(selector)];
 
+  const contactForm = $('.contact-form');
+  if (contactForm) {
+    const send = contactForm.querySelector('button[type="submit"]');
+    const status = contactForm.querySelector('[role="status"]');
+
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (send.disabled) return;
+
+      const inquiry = new FormData(contactForm);
+      send.disabled = true;
+      status.textContent = choose('Sending your inquiry…', 'Viestiä lähetetään…');
+
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: inquiry,
+        });
+        if (!response.ok) throw new Error('Formspree did not accept the inquiry.');
+        contactForm.reset();
+        status.textContent = choose('Thanks! Your inquiry was sent.', 'Kiitos! Viestisi on lähetetty.');
+      } catch {
+        status.textContent = choose(
+          'We couldn’t send your inquiry. Try again or email us directly.',
+          'Viestin lähetys ei onnistunut. Yritä uudelleen tai ota yhteyttä sähköpostitse.'
+        );
+      } finally {
+        send.disabled = false;
+      }
+    });
+  }
+
   function initializeLabels() {
     const labels = [
       ['.desktop-nav', 'Main navigation', 'Päänavigaatio'],
